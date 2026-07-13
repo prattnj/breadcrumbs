@@ -6,6 +6,9 @@ import { analyze, getFilteredPoints } from "./analysis.js";
 import { sessionMiddleware, login, logout, requireAuth } from "./auth.js";
 
 const app = express();
+// Behind a TLS-terminating reverse proxy: trust X-Forwarded-Proto so Express
+// knows the original request was HTTPS and cookie-session will set the Secure cookie.
+app.set("trust proxy", 1);
 app.use(cors());
 app.use(express.json());
 app.use(sessionMiddleware);
