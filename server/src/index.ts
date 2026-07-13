@@ -3,10 +3,19 @@ import cors from "cors";
 import { join } from "path";
 import mysql from "mysql2/promise";
 import { analyze, getFilteredPoints } from "./analysis.js";
+import { sessionMiddleware, login, logout, requireAuth } from "./auth.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(sessionMiddleware);
+
+// Auth routes (open) must be registered before the auth gate.
+app.post("/api/login", login);
+app.post("/api/logout", logout);
+
+// Everything below this point requires a valid session.
+app.use(requireAuth);
 
 // Serve built client in production
 const clientDist = join(import.meta.dirname, "../../client/dist");
