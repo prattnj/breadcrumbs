@@ -1,0 +1,14 @@
+services:
+  breadcrumbs:
+    build: .
+    container_name: breadcrumbs
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${PORT_BREADCRUMBS:?Port environment variable must be set}:3000"
+    environment:
+      - BREADCRUMBS_MYSQL_HOST=host.docker.internal
+      - BREADCRUMBS_MYSQL_USER
+      - BREADCRUMBS_MYSQL_PASSWORD
+      - BREADCRUMBS_PASSWORD
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -25,7 +25,7 @@ const clientDist = join(import.meta.dirname, "../../client/dist");
 app.use(express.static(clientDist));
 
 const pool = mysql.createPool({
-  host: "localhost",
+  host: process.env.BREADCRUMBS_MYSQL_HOST || "localhost",
   database: "breadcrumbs",
   user: process.env.BREADCRUMBS_MYSQL_USER,
   password: process.env.BREADCRUMBS_MYSQL_PASSWORD,
@@ -177,6 +177,6 @@ app.get("*", (_req, res) => {
   res.sendFile(join(clientDist, "index.html"));
 });
 
-app.listen(3013, () => {
-  console.log("Breadcrumbs server listening on http://localhost:3013");
+app.listen(3000, () => {
+  console.log("Breadcrumbs server listening on http://localhost:3000");
 });

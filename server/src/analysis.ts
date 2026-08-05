@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 import { LocationEntry, Extremes, AnalysisResult } from "./types.js";
 
 const pool = mysql.createPool({
-  host: "localhost",
+  host: process.env.BREADCRUMBS_MYSQL_HOST || "localhost",
   database: "breadcrumbs",
   user: process.env.BREADCRUMBS_MYSQL_USER,
   password: process.env.BREADCRUMBS_MYSQL_PASSWORD,
